@@ -11,11 +11,11 @@ const ContactModel = require('./contacts');
 const PaymentModel = require('./payment');
 
 // define connection to database
-const sequelize = new Sequelize('freelancepm', 'root', '', {
-    host: 'localhost',
-    dialect: 'mysql',
+const sequelize = new Sequelize(process.env.DB_NAME || 'freelancepm', process.env.DB_USER || 'root', process.env.DB_PASSWORD || '', {
+    host: process.env.DB_HOST || 'localhost',
+    dialect: process.env.DB_DIALECT || 'mysql',
     pool: {
-        max: 10,
+        max: 20,
         min: 0,
         acquire: 30000,
         idle: 10000
