@@ -1,0 +1,150 @@
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+    <div
+        class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Client: {{clientData.[0].name}}</h1>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h2>Payments</h2>
+                <p>lorem ipsum</p>
+            </div>
+            <div class="col">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-header">
+                        <strong>Contacts</strong> - <a href="#" class="right">Add new contact</a>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        {{#each clientData.[0].contacts}}
+                        <li class="list-group-item"><strong>{{name}}</strong><br /><a
+                                href="mailto:{{email}}">{{email}}</a></li>
+                        {{/each}}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Client Notes</h3><a href="#" data-toggle="modal" data-target="#addNote">Add Note</a>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        {{#each clientData.[0].notes}}
+                        <li class="list-group-item">{{description}}</li>
+                        {{/each}}
+                    </ul>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-header">
+                        <strong>Contact Info</strong> - <a href="#">Edit Contact Info</a>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Website: <a
+                                href="http://{{ clientData.[0].website }}" target="_blank">{{ clientData.[0].website }}</a></li>
+                        <li class="list-group-item">Phone Number: {{ clientData.[0].phoneNumber }}</li>
+                        <li class="list-group-item">LinkedIn: {{ clientData.[0].linkedIn }}</li>
+                        <li class="list-group-item">Client Since: {{ clientData.[0].createdAt }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <span>
+                    <h2>Projects</h2>
+                    <a href="#" data-toggle="modal" data-target="#addProject">Add Project</a>
+                </span>
+                <div class="row">
+                    {{#each clientData.[0].projects}}
+                    <div class="col-4">
+                        <div class="card">
+                            <h5 class="card-header">{{name}}</h5>
+                            <div class="card-body">
+                                <p class="card-text">{{description}}</p>
+                                <a href="/projects/{{id}}" class="btn btn-primary">Visit Project</a>
+                            </div>
+                        </div>
+                    </div>
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<div class="modal fade" id="addNote" tabindex="-1" role="dialog" aria-labelledby="addNoteLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form method="post" action="/clients/addNote">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addNoteLabel">Add Note</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea class="form-control" id="description" rows="3" name="description"
+                            aria-describedby="description" placeholder="Note"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <input name="clientid" type="hidden" class="form-control" id="clientID"
+                            aria-describedby="clientIDHelp" value={{clientData.[0].id}}>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button name="addClient" type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="addProject" tabindex="-1" role="dialog" aria-labelledby="addProjectLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form method="post" action="/projects/addProject" id="addProject">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addProjectLabel">Add Project</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="projectName">Project Name</label>
+                        <input name="projectName" type="text" class="form-control" id="projectName"
+                            placeholder="Project Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="projectDescription">Project Description</label>
+                        <textarea class="form-control" id="projectDescription" rows="3" name="projectDescription"
+                            aria-describedby="projectDescription" placeholder="Project Description"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="hourlyRate">Hourly Rate</label>
+                        <input name="hourlyRate" type="text" class="form-control" id="hourlyRate"
+                            placeholder="Hourly Rate" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="fixedRate">Fixed Rate</label>
+                        <input name="fixedRate" type="text" class="form-control" id="fixedRate" placeholder="Fixed Rate"
+                            value="0">
+                    </div>
+                    <div class="form-group">
+                        <input name="clientid" type="hidden" class="form-control" id="clientID"
+                            aria-describedby="clientIDHelp" value={{clientData.[0].id}}>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button name="addClient" type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

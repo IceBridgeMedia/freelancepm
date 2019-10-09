@@ -1,0 +1,75 @@
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+    <div
+        class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Project: {{ projectData.[0].name }}</h1>
+        <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#addTask">Add
+            Task</button>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Description</h5>
+                    <p class="card-text">{{ projectData.[0].description }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <h2>Task List</h2>
+    <div class="row">
+
+        {{#each projectData.[0].tasks}}
+        <div class="col-4">
+            <div class="card {{#if status}}border-success{{/if}}">
+                <div class="card-body">
+                    <h5 class="card-title">{{name}}</h5>
+                    <p class="card-text">{{description}}</p>
+                    <a href="/projects/taskDelete/{{id}}" class="card-link">Delete Task</a>
+
+                    {{#if status}}
+
+                    {{else}}
+                    <a href="/projects/taskComplete/{{id}}" class="card-link">Complete Task</a>
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+</main>
+<div class="modal fade" id="addTask" tabindex="-1" role="dialog" aria-labelledby="addTaskLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form method="post" action="/projects/addTask">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addTaskLabel">Add Task</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="taskName">Task Name</label>
+                        <input name="taskName" type="text" class="form-control" id="taskName"
+                            aria-describedby="taskNameHelp" placeholder="Task Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="taskDescription">Task description</label>
+                        <textarea class="form-control" id="taskDescription" rows="3" name="taskDescription"
+                            aria-describedby="taskDescription" placeholder="Task Description"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <input name="projectId" type="hidden" class="form-control" id="projectId"
+                            aria-describedby="clientIDHelp" value={{projectData.[0].id}}>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button name="addClient" type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

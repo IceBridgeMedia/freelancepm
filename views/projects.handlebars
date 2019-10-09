@@ -1,0 +1,89 @@
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+    <div
+        class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Projects</h1>
+        <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#addProject">Add
+            Project</button>
+    </div>
+
+
+    <div class="row">
+        <div class="col">
+            <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped table-sm">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Client</th>
+                    <th>Hourly Rate</th>
+                    <th>Fixed Rate</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each projects}}
+                <tr>
+                    <td><a href="/projects/{{id}}">{{name}}</a></td>
+                    <td>{{ description }}</td>
+                    <td><a href="/clients/{{ client.id }}">{{ client.name }}</a></td>
+                    <td>{{ hourlyRate }}</td>
+                    <td>{{ fixedRate }}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+    {{ clientData }}
+</main>
+<div class="modal fade" id="addProject" tabindex="-1" role="dialog" aria-labelledby="addProjectLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form method="post" action="/projects/addProject" id="addProject">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addProjectLabel">Add Project</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <select class="custom-select" id="clientSelector" name="clientid" required>
+                            {{#each clients}}
+                                <option value="{{ id }}">{{ name }}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="projectName">Project Name</label>
+                        <input name="projectName" type="text" class="form-control" id="projectName"
+                            placeholder="Project Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="projectDescription">Project Description</label>
+                        <textarea class="form-control" id="projectDescription" rows="3" name="projectDescription"
+                            aria-describedby="projectDescription" placeholder="Project Description"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="hourlyRate">Hourly Rate</label>
+                        <input name="hourlyRate" type="text" class="form-control" id="hourlyRate"
+                            placeholder="Hourly Rate" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="fixedRate">Fixed Rate</label>
+                        <input name="fixedRate" type="text" class="form-control" id="fixedRate" placeholder="Fixed Rate"
+                            value="0">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button name="addClient" type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
