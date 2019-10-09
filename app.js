@@ -31,7 +31,7 @@ app.use('*', (req, res) => {
 
 
 
-const port = 3000 || process.env.PORT;
+const port = process.env.PORT || 3000;
 app.listen(port, () => {
     console.log("Running on port:", port);
 });
